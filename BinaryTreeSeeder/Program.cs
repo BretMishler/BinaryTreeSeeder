@@ -1,5 +1,4 @@
-﻿
-using BinaryTreeSeeder;
+﻿using System;
 
 class Program
 {
@@ -8,8 +7,10 @@ class Program
 
         // See https://aka.ms/new-console-template for more information
 
-        var plantedTrees = new SeedTrees(5);
+        var plantedTrees = new TreePlanter(10);
 
+        // make an in-order traversal algo
+        // make a post-order traversal algo
 
         Console.WriteLine("Hello, World!");
     }
