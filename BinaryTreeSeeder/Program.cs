@@ -1,4 +1,7 @@
 ﻿
+using System;
+using System.Linq;
+
 class Program
 {
     static void Main(string[] args)
@@ -10,11 +13,12 @@ class Program
 
         var traverser = new TreeClimber();
 
-        // make an in-order traversal algo
         var inorderResult = traverser.InorderRecursive(plantedTrees.Trees.First());
 
-        // make a post-order traversal algo
         var postorderResult = traverser.PostorderRecursive(plantedTrees.Trees.First());
-        Console.WriteLine("Hello, World!");
+
+        // make function to travere array with inorder and postorder and make tree
+        var x = traverser.BuildTreeFromInorderPostorder(inorderResult.ToArray(), postorderResult.ToArray());
+        
     }
 }
