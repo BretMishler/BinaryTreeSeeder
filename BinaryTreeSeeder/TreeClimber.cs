@@ -83,6 +83,8 @@ internal class TreeClimber
             return new BinaryTree(inorder[0]);
         }
 
+        InorderDict.Clear();
+
         for (int i = 0; i < inorder.Length; i++)
         {
             if(!InorderDict.TryAdd(inorder[i], i))
@@ -113,6 +115,6 @@ internal class TreeClimber
         node.Right = BuildTreeFromPostOrder(nodeInOrderIndex + 1, stop);
         node.Left = BuildTreeFromPostOrder(start, nodeInOrderIndex - 1);
 
-        return null;
+        return node;
     }
 }
