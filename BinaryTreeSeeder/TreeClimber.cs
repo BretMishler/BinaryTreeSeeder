@@ -9,7 +9,7 @@ internal class TreeClimber
     private List<int> PostorderRecursiveNodes = new List<int>();
 
     private Dictionary<int, int> InorderDict = new Dictionary<int, int>();
-    private int[] PostOrderArr;
+    private int[] PostOrderArr = new int[] { };
     private int PostOrderIndex;
 
     /// <summary>
@@ -66,10 +66,11 @@ internal class TreeClimber
         return PostorderRecursiveNodes;
     }
 
-    public BinaryTree? BuildTreeFromInorderPostorder(int[] inorder, int[] postorder)
+    public BinaryTree? BuildTreeFromInorderPostorder_WithSharedDictionary(int[] inorder, int[] postorder)
     {
         if (inorder == null || postorder == null || inorder.Length == 0)
         {
+
             return null;
         }
 
@@ -116,5 +117,56 @@ internal class TreeClimber
         node.Left = BuildTreeFromPostOrder(start, nodeInOrderIndex - 1);
 
         return node;
+    }
+
+    public BinaryTree? BuildTreeFromInorderPostorder_NoDictionary(int[] inorder, int[] postorder)
+    {
+        if (inorder == null || postorder == null)
+        {
+            return null;
+        }
+
+        if (inorder.Length == 1)
+        {
+            return new BinaryTree(inorder[0]);
+        }
+
+        int rootIndex = 0;
+        int rootVal = postorder[postorder.Length - 1];
+
+        for (int i = 0; i < inorder.Length; i++)
+        {
+            if (inorder[i] == rootVal)
+            {
+                rootIndex = i;
+                break;
+            }
+        }
+
+        int[]? inOrderLeft = null;
+        int[]? inOrderRight = null;
+        int[]? postOrderLeft = null;
+        int[]? postOrderRight = null;
+        if (inorder[0] != rootVal)
+        {
+            inOrderLeft = new int[rootIndex];
+            Array.Copy(inorder, inOrderLeft, inOrderLeft.Length);
+            postOrderLeft = new int[inOrderLeft.Length];
+            Array.Copy(postorder, postOrderLeft, postOrderLeft.Length);
+        }
+
+
+        if (inorder[inorder.Length - 1] != rootVal)
+        {
+            inOrderRight = new int[inorder.Length - 1 - rootIndex];
+            Array.Copy(inorder, rootIndex + 1, inOrderRight, 0, inOrderRight.Length);
+            postOrderRight = new int[inOrderRight.Length];
+            Array.Copy(postorder, postorder.Length - inOrderRight.Length - 1, postOrderRight, 0, postOrderRight.Length);
+        }
+
+
+        return new BinaryTree(rootVal,
+            BuildTreeFromInorderPostorder_NoDictionary(inOrderLeft, postOrderLeft),
+            BuildTreeFromInorderPostorder_NoDictionary(inOrderRight, postOrderRight));
     }
 }

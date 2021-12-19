@@ -15,12 +15,12 @@ internal class TreePlanter
     /// <param name="numTrees"></param>
     /// <param name="maxNumNodes"></param>
     /// <param name="minNumNodes"></param>
-    public TreePlanter(int numTrees, int maxNumNodes = Int32.MaxValue, int minNumNodes = 1)
+    public TreePlanter(int numTrees, ushort maxNumNodes = 65535, int minNumNodes = 1)
     {
 
         for (int i = 0; i < numTrees; i++)
         {
-            Trees.Add(PlantTree(maxNumNodes));
+            Trees.Add(PlantTree(random.Next(maxNumNodes)));
             randNums.Clear();
         }
     }
@@ -35,7 +35,7 @@ internal class TreePlanter
         int nodeVal;
         do
         {
-            nodeVal = random.Next(100);
+            nodeVal = random.Next();
         } while (!randNums.Add(nodeVal));
 
         var nodesOnLeftCount = random.Next(--totalNodeCount);
